@@ -1,0 +1,52 @@
+<!doctype html>
+<html ng-app="qcApp">
+<head>
+	<title>QC Distribution Worksheet</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+	<script src="ui-bootstrap-tpls-0.3.0.min.js"></script>
+	<script src="qc.js"></script>
+	<link rel="stylesheet" href="qc.css">
+	<link rel="stylesheet" href="bootstrap.min.css">
+</head>
+<body>
+	<div class="navbar navbar-inverse navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container">
+				<a class="brand" href="#">QC Distribution</a>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div ng-controller="QcCtrl">
+			<div class="row">
+				<div class="span2" ng-repeat="location in locations">
+					<div class="row"><h5>{{location.name}}</h5></div>
+					<div class="row xr-{{location.countsXray}}">X-Ray count: <span class="badge badge-warning">{{location.xrCount}}</span></div>
+					<div class="row">Body weight: <span class="badge badge-info">{{location.bodyWeight}}</span></div>
+					<div class="row neuro-{{location.takesNeuro}}">Neuro weight: <span class="badge badge-important">{{location.neuroWeight}}</span></div>
+				</div>
+			</div>
+
+			<div class="row">&nbsp;</div>
+
+			<div class="row">
+				<form class="form-inline" ng-submit="addAssignment()">
+					<select ng-model="test" ng-options="e.name for e in exams">
+						<option value="">-- Select an Exam --</option>
+					</select>
+					<select ng-model="place" ng-options="l.name for l in filteredLocations()">
+						<option value="">-- Select Location --</option>
+					</select>
+					<input class="btn btn-primary" type="submit" value="Add">
+				</form>
+			</div>
+
+			<div class="row">
+				<form class="form-inline" ng-submit="resetCounters()">
+					<input class="btn btn-danger" type="submit" value="Reset Counters">
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
